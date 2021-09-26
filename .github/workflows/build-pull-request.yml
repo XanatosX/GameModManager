@@ -1,0 +1,41 @@
+name: Check pull request
+
+on: [pull_request]
+
+jobs:
+   checkAvaloniaBuildWindows:
+     name: Check Avalonia build
+     runs-on: windows-latest
+     steps:
+       - name: Clone repository
+         uses: actions/checkout@v2
+       - name: Restore
+         run: dotnet restore
+         shell: powershell
+       - name: Build project Windows
+         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r win-x64 --self-contained true
+         shell: powershell
+    checkAvaloniaBuildLinux:
+     name: Check Avalonia build
+     runs-on: windows-latest
+     steps:
+       - name: Clone repository
+         uses: actions/checkout@v2
+       - name: Restore
+         run: dotnet restore
+         shell: powershell
+       - name: Build project Windows
+         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r linux-x64 --self-contained true
+         shell: powershell
+    checkAvaloniaBuildDarwin:
+     name: Check Avalonia build
+     runs-on: windows-latest
+     steps:
+       - name: Clone repository
+         uses: actions/checkout@v2
+       - name: Restore
+         run: dotnet restore
+         shell: powershell
+       - name: Build project Windows
+         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r osx-x64 --self-contained true
+         shell: powershell
