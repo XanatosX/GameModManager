@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
+    <PackageReference Include="Octokit" Version="0.50.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\YesNoView.axaml.cs">
+      <DependentUpon>YesNoView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\YesNoWindow.axaml.cs">
+      <DependentUpon>YesNoWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Enums\" />
+  </ItemGroup>
+</Project>

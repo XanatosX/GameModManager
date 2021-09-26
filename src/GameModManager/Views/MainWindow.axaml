@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GameModManager.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="GameModManager.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="GameModManager"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <Panel>
+    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+      <ExperimentalAcrylicBorder.Material>
+        <ExperimentalAcrylicMaterial
+            BackgroundSource="Digger"
+            TintColor="Black"
+            TintOpacity="1"
+            MaterialOpacity="0.65" />
+      </ExperimentalAcrylicBorder.Material>
+    </ExperimentalAcrylicBorder>
+    <Panel Margin="40">
+      <Grid RowDefinitions="auto,*">
+        <DockPanel Grid.Row="0">
+          <Button Command="{Binding AddGameCommand}" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <PathIcon Data="{StaticResource add_regular}" />
+          </Button>
+          <StackPanel>
+            <TextBox IsVisible="{Binding CollectionFilled}" Text="{Binding SearchText}" Watermark="Search for game"></TextBox>
+          </StackPanel>
+        </DockPanel>
+        <Panel Grid.Row="1">
+          <TextBlock IsVisible="{Binding CollectionEmpty}" Text="Add your first game to get started" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+          <ListBox Items="{Binding Games}" SelectedItem="{Binding SelectedGame}" Background="Transparent" Margin="0, 20"/>
+        </Panel>
+      </Grid>
+    </Panel>
+  </Panel>
+
+</Window>
