@@ -18,7 +18,7 @@ namespace GameModManager.Models
 
         public string RemoteUrl => url.Value.Url;
 
-        private Lazy<UrlOpener> url;
+        private readonly Lazy<UrlOpener> url;
         public ModProvider DataProviderToUse { get; }
         public string Name { get; private set; }
 
@@ -42,7 +42,7 @@ namespace GameModManager.Models
 
         public async Task OpenLinkInBrowser()
         {
-            await Task.Run(() => url.Value.OpenInBrowser());
+            await Task.Run(() => url.Value.OpenInBrowser()).ConfigureAwait(false);
         }
 
         public async Task<Stream> LoadGameImage()

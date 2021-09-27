@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataProviders.Loaders
 {
-    public interface IDataLoader<T>
+    public interface IDataLoader<out T>
     {
         T LoadData(string dataSource);
     }

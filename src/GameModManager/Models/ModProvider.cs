@@ -1,6 +1,7 @@
 ﻿using GameModManager.Services.DataProviders.ModLoader;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,7 +13,7 @@ namespace GameModManager.Models
     {
         public Type ProviderType { get; }
         public string Name { get; }
-        private Lazy<IModLoader> modLoader;
+        private readonly Lazy<IModLoader> modLoader;
 
         public ModProvider(Type providerType)
         {
@@ -52,7 +53,7 @@ namespace GameModManager.Models
             {
                 return name;
             }
-            StringBuilder stringBuilder = new StringBuilder(name[0].ToString().ToUpper());
+            StringBuilder stringBuilder = new StringBuilder(name[0].ToString().ToUpper(CultureInfo.InvariantCulture));
             for(int i=1; i < name.Length; i++)
             {
                 string format = "{0}";

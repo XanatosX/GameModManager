@@ -42,7 +42,7 @@ namespace GameModManager.Views
             YesNoWindow yesNo = new YesNoWindow();
             yesNo.DataContext = interaction.Input;
             YesNoDialogResult result = await yesNo.ShowDialog<YesNoDialogResult>(this);
-            result = result ?? new YesNoDialogResult(false);
+            result ??= new YesNoDialogResult(false);
             interaction.SetOutput(result);
         }
     }

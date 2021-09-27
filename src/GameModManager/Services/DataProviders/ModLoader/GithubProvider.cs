@@ -3,6 +3,7 @@ using GameModManager.Services.Container;
 using GameModManager.Services.DataProviders.Savers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -22,7 +23,7 @@ namespace GameModManager.Services.DataProviders.ModLoader
                 return false;
             }
             bool valid = true;
-            valid &= splitted[1].ToLower() == "github.com";
+            valid &= splitted[1].ToLower(CultureInfo.InvariantCulture) == "github.com";
             valid &= !string.IsNullOrEmpty(GetUsernameFromUrl(splitted));
             valid &= !string.IsNullOrEmpty(GetProjectFromUrl(splitted));
             return valid;

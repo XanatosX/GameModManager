@@ -18,7 +18,7 @@ namespace GameModManager.Services.Container
             Url = url;
             processStartInfo = new Lazy<ProcessStartInfo>(() =>
             {
-                return new ProcessStartInfo()
+                return new ProcessStartInfo
                 {
                     UseShellExecute = true,
                     FileName = url

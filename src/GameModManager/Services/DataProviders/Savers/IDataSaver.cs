@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataProviders.Savers
 {
-    public interface IDataSaver<T>
+    public interface IDataSaver<in T>
     {
         bool SaveData(T data, string file);
     }

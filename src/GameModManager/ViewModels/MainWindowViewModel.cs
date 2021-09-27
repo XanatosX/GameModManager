@@ -41,7 +41,7 @@ namespace GameModManager.ViewModels
         }
 
         public ReadOnlyObservableCollection<GameViewModel> Games => games;
-        private ReadOnlyObservableCollection<GameViewModel> games;
+        private readonly ReadOnlyObservableCollection<GameViewModel> games;
         private readonly SourceList<GameViewModel> allAvailableGames;
 
         public ICommand AddGameCommand { get; }
@@ -102,20 +102,6 @@ namespace GameModManager.ViewModels
                                  }
                                  this.RaisePropertyChanged("allAvailableGames");
                              });
-                             
-            /**
-            allAvailableGames.Add(new GameViewModel(
-                new Game(
-                    @"C:\Program Files (x86)\Steam\steamapps\common\Carrier Command 2\carrier_command.exe",
-                    "Carrier Command 2",
-                    @"C:\Program Files (x86)\Steam\steamapps\common\Carrier Command 2\rom_0\scripts",
-                    "https://github.com/AvaloniaUI/Avalonia",
-                    new ModProvider(typeof(GithubProvider))
-                    )
-                ));
-            **/
-
-
             LoadCovers();
         }
 
@@ -128,7 +114,7 @@ namespace GameModManager.ViewModels
             return t => t.Game.Name.Contains(text, StringComparison.OrdinalIgnoreCase);
         }
 
-        private async void LoadCovers()
+        private async Task LoadCovers()
         {
             foreach (GameViewModel model in allAvailableGames.Items)
             {

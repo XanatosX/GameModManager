@@ -71,7 +71,6 @@ namespace GameModManager.ViewModels
             });
             EditEntry = ReactiveCommand.CreateFromTask(async () =>
             {
-                Game test = this.Game;
                 AddGameViewModel model = new AddGameViewModel(this.Game);
                 GameViewModel gameView = await ShowEditDialog.Handle(model);
 

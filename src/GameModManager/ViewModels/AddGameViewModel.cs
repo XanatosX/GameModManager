@@ -142,14 +142,14 @@ namespace GameModManager.ViewModels
                     valid &= provider != null;
                     if (provider != null)
                     {
-                        bool urlValid = provider.GetClassInstance().CheckUrlIsValid(url);
-                        if (!urlValid)
+                        bool urlIsValid = provider.GetClassInstance().CheckUrlIsValid(url);
+                        if (!urlIsValid)
                         {
                             cancellationTokenSource?.Cancel();
                             UrlErrorText = URL_NOT_VALID_FOR_PROVIDER;
                         }
-                        UrlValid &= urlValid;
-                        valid &= urlValid;
+                        UrlValid &= urlIsValid;
+                        valid &= urlIsValid;
                     }
                     return valid;
                 }
@@ -210,7 +210,7 @@ namespace GameModManager.ViewModels
             this.WhenAnyValue(x => x.GameExe)
                 .Throttle(TimeSpan.FromMilliseconds(400))
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(LoadGameCover);
+                .Subscribe(x => LoadGameCover(x));
 
             this.WhenAnyValue(x => x.GameDisplayName)
                 .Throttle(TimeSpan.FromMilliseconds(400))
@@ -274,20 +274,15 @@ namespace GameModManager.ViewModels
             });
         }
 
-        private bool CanSaveNewGame(AddGameViewModel viewModel)
+        private async Task LoadGameCover(string exePath)
         {
-            return false;
-        }
-
-        private async void LoadGameCover(string exePath)
-        {
-            if (!File.Exists(GameExe))
+            if (!File.Exists(exePath))
             {
                 GameCover = null;
                 return;
             }
 
-            System.Drawing.Icon loadedIcon = System.Drawing.Icon.ExtractAssociatedIcon(GameExe);
+            System.Drawing.Icon loadedIcon = System.Drawing.Icon.ExtractAssociatedIcon(exePath);
             using (MemoryStream mStream = new MemoryStream())
             {
                 loadedIcon.ToBitmap().Save(mStream, ImageFormat.Png);

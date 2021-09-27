@@ -28,7 +28,7 @@ namespace GameModManager.Views
 
         private async Task DoOpenFileInteraction(InteractionContext<List<FileDialogFilter>, string> context)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filters = context.Input
             };
@@ -38,7 +38,7 @@ namespace GameModManager.Views
 
         private async Task DoOpenFolderInteraction(InteractionContext<string, string> context)
         {
-            OpenFolderDialog openFolderDialog = new OpenFolderDialog()
+            OpenFolderDialog openFolderDialog = new OpenFolderDialog
             {
                 Directory = context.Input
             };
