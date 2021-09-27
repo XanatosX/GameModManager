@@ -13,7 +13,7 @@ jobs:
          run: dotnet restore
          shell: powershell
        - name: Build project Windows
-         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r win-x64 --self-contained true
+         run: dotnet publish .\src\GameModManager\ -c Release -r win-x64 --self-contained true
          shell: powershell
    checkAvaloniaBuildLinux:
      name: Check Avalonia build Linux
@@ -25,7 +25,7 @@ jobs:
          run: dotnet restore
          shell: powershell
        - name: Build project Windows
-         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r linux-x64 --self-contained true
+         run: dotnet publish .\src\GameModManager\ -c Release -r linux-x64 --self-contained true
          shell: powershell
    checkAvaloniaBuildDarwin:
      name: Check Avalonia build Darwin
@@ -37,5 +37,5 @@ jobs:
          run: dotnet restore
          shell: powershell
        - name: Build project Windows
-         run: dotnet publish .\src\XmlFormatterOsIndependent\ -c Release -r osx-x64 --self-contained true
+         run: dotnet publish .\src\GameModManager\ -c Release -r osx-x64 --self-contained true
          shell: powershell
