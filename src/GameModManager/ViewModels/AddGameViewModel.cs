@@ -20,7 +20,7 @@ using System.Windows.Input;
 
 namespace GameModManager.ViewModels
 {
-    public class AddGameViewModel : ViewModelBase
+    public class AddGameViewModel : ViewModelBase, IDisposable
     {
         private const string LOADER_NAMESPACE = "GameModManager.Services.DataProviders.ModLoader";
         private const string URL_NOT_REACHABLE = "The url is not reachable!";
@@ -298,6 +298,11 @@ namespace GameModManager.ViewModels
                 return RemoveDirectoryEnding(input.Remove(input.Length - 1));
             }
             return input;
+        }
+
+        public void Dispose()
+        {
+            cancellationTokenSource?.Dispose();
         }
     }
 }

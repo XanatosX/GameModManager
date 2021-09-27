@@ -24,6 +24,8 @@ namespace GameModManager.Views
             this.WhenActivated(d => d(ViewModel!.AbortAdding.Subscribe(Close)));
             this.WhenActivated(d => d(ViewModel!.OpenFileInteraction.RegisterHandler(DoOpenFileInteraction)));
             this.WhenActivated(d => d(ViewModel!.OpenFolderInteraction.RegisterHandler(DoOpenFolderInteraction)));
+
+            Closing += (sender, args) => ViewModel?.Dispose();
         }
 
         private async Task DoOpenFileInteraction(InteractionContext<List<FileDialogFilter>, string> context)
