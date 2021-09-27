@@ -114,7 +114,7 @@ namespace GameModManager.ViewModels
             return t => t.Game.Name.Contains(text, StringComparison.OrdinalIgnoreCase);
         }
 
-        private async Task LoadCovers()
+        private async void LoadCovers()
         {
             foreach (GameViewModel model in allAvailableGames.Items)
             {

@@ -163,7 +163,7 @@ namespace GameModManager.ViewModels
 
                     if (!cancellationTokenSource.IsCancellationRequested)
                     {
-                        UrlValid = await CheckUrlReachable(cancellationTokenSource.Token, data);
+                        UrlValid = await CheckUrlReachable(cancellationTokenSource.Token, data).ConfigureAwait(false);
                     }
                     
                 });
