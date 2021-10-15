@@ -8,6 +8,10 @@ namespace GameModManager.Services.DataProviders.Loaders.Checksum
     {
         public override string LoadData(string dataSource)
         {
+            if (!File.Exists(dataSource))
+            {
+                return string.Empty;
+            }
             StringBuilder builder = new StringBuilder();
             using (MD5 mD5 = MD5.Create())
             {
