@@ -15,9 +15,24 @@ namespace GameModManager.Services.DataProviders.Savers
     /// </summary>
     public class ArtifactProvider : IDataSaver<ReleaseArtifact>, IDataLoader<ReleaseArtifact>
     {
+        /// <summary>
+        /// Name of the readme file to save into the archive
+        /// </summary>
         private const string README_NAME = "readme.md";
+
+        /// <summary>
+        /// Name of the manifest file to save into the archive
+        /// </summary>
         private const string MANIFEST_NAME = "manifest";
+
+        /// <summary>
+        /// name of the artifact to save into the archive
+        /// </summary>
         private const string ARTIFACT_NAME = "artifact";
+
+        /// <summary>
+        /// Source of the readme file text
+        /// </summary>
         private const string README_TEXT_RESOURCE = "GameModManager.Resources.ReleaseArtifactReadmeText.md";
 
         /// <inheritdoc/>
