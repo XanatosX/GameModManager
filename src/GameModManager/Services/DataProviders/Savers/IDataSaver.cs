@@ -1,4 +1,6 @@
-﻿namespace GameModManager.Services.DataProviders.Savers
+﻿using System.Threading.Tasks;
+
+namespace GameModManager.Services.DataProviders.Savers
 {
     /// <summary>
     /// Interface to define a loading class
@@ -13,5 +15,13 @@
         /// <param name="connectionString">The connection string used to save the data set to</param>
         /// <returns>True if saving was successful</returns>
         bool SaveData(T data, string connectionString);
+
+        /// <summary>
+        /// Save the dataset to a connection string async
+        /// </summary>
+        /// <param name="data">The data which should be save of type T</param>
+        /// <param name="connectionString">The connection string used to save the data set to</param>
+        /// <returns>True if saving was successful</returns>
+        Task<bool> SaveDataAsync(T data, string connectionString);
     }
 }
