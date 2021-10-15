@@ -91,11 +91,11 @@ namespace GameModManager.ViewModels
                                  if (x != null)
                                  {
                                      YesNoDialogResult result = await DeleteGame.Handle(new YesNoViewModel("Delete Game", string.Format("Do you want to delete the game ", x.Game.Name)));
-                                     if (result != null && result.accepted)
+                                     if (result != null && result.Accepted)
                                      {
                                          allAvailableGames.Remove(x);
                                      }
-                                     if (result == null || !result.accepted)
+                                     if (result == null || !result.Accepted)
                                      {
                                          x.IsActive = true;
                                      }

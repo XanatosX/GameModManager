@@ -46,7 +46,7 @@ namespace GameModManager.Models
                 ConstructorInfo emptyConstructor = ProviderType.GetConstructors().Where(c => c.IsPublic && c.GetParameters().Length == 0).FirstOrDefault();
                 if (emptyConstructor == null)
                 {
-                    return null;
+                    return default;
                 }
                 try
                 {
@@ -61,7 +61,7 @@ namespace GameModManager.Models
                     // Instance creation did fail
                 }
 
-                return null;
+                return default;
             });
         }
 

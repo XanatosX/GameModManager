@@ -13,7 +13,7 @@ namespace GameModManager.Services.DataProviders.ModLoader
 {
     public class GithubProvider : IModLoader
     {
-        public string ExampleUrl => "https://github.com/XanatosX/XmlFormatter";
+        public string ExampleUrl => "https://github.com/XanatosX/GameModManager";
 
         public bool CheckUrlIsValid(string url)
         {
