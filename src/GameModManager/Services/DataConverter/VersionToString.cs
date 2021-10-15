@@ -1,16 +1,15 @@
 ﻿using Avalonia.Data.Converters;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataConverter
 {
+    /// <summary>
+    /// Converter class to convert version to valid string
+    /// </summary>
     class VersionToString : IValueConverter
     {
-
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Version version)
@@ -20,6 +19,7 @@ namespace GameModManager.Services.DataConverter
             return string.Empty;
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string version)

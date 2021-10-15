@@ -122,9 +122,16 @@ namespace GameModManager.ViewModels
             GameDisplayName = string.Empty;
             TargetFolder = string.Empty;
 
+            Providers = new ObservableCollection<ModProvider>();
             IDataLoader<IReadOnlyList<ModProvider>> modProviderLoader = new ModLoaderProvider();
-            IReadOnlyList<ModProvider> providers = modProviderLoader.LoadData(LOADER_NAMESPACE);
-            Providers = new ObservableCollection<ModProvider>(providers);
+            Task<IReadOnlyList<ModProvider>> modLoadingTask = modProviderLoader.LoadDataAsync(LOADER_NAMESPACE);
+            modLoadingTask.ContinueWith(t => {
+                Providers.Clear();
+                foreach(ModProvider provider in t.Result)
+                {
+                    Providers.Add(provider);
+                }
+            });
 
             var canExecute = this.WhenAnyValue(
                 x => x.GameDisplayName,

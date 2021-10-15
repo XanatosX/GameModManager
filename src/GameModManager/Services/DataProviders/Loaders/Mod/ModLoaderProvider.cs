@@ -3,14 +3,16 @@ using GameModManager.Services.DataProviders.ModLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataProviders.Loaders.Mod
 {
-    public class ModLoaderProvider : IDataLoader<IReadOnlyList<ModProvider>>
+    /// <summary>
+    /// Class to get all the mod providers in this project
+    /// </summary>
+    public class ModLoaderProvider : AbstractDataLoader<IReadOnlyList<ModProvider>>
     {
-        public IReadOnlyList<ModProvider> LoadData(string dataSource)
+        /// <inheritdoc/>
+        public override IReadOnlyList<ModProvider> LoadData(string dataSource)
         {
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(t => t.GetTypes())
                                                           .Where(t => t.IsClass && t.Namespace == dataSource)

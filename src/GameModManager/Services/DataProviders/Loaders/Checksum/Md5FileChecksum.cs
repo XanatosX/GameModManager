@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataProviders.Loaders.Checksum
 {
-    public class Md5FileChecksum : IDataLoader<string>
+    public class Md5FileChecksum : AbstractDataLoader<string>
     {
-        public string LoadData(string dataSource)
+        public override string LoadData(string dataSource)
         {
             StringBuilder builder = new StringBuilder();
             using (MD5 mD5 = MD5.Create())
