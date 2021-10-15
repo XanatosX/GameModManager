@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:conv="clr-namespace:GameModManager.Services.DataConverter;assembly=GameModManager"
+             xmlns:conv="clr-namespace:GameModManager.Services.DataConverter;assembly=GameModManager"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GameModManager.Views.AddGameView"
              MaxWidth="700">
@@ -51,7 +51,7 @@
           <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Spacing="5">
             <TextBlock  VerticalAlignment="Center">Game image</TextBlock>
             <Image IsVisible="{Binding CoverExists}" Source="{Binding GameCover}" Width="32" Height="32"></Image>
-            <Panel Height="32" IsVisible="{Binding CoverMissing}">
+            <Panel Height="32" IsVisible="{Binding CoverExists, Converter={StaticResource NegateBool}}">
               <PathIcon Height="32" Width="32" Data="{StaticResource games_regular}" />
             </Panel>
           </StackPanel>

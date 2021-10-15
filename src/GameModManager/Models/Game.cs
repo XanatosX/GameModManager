@@ -58,6 +58,14 @@ namespace GameModManager.Models
         /// </summary>
         public Version RemoteVersion { get; private set; }
 
+        /// <summary>
+        /// Create a new instance of the game class
+        /// </summary>
+        /// <param name="gameExe">The game exe to get the image from</param>
+        /// <param name="name">The name of the game to show</param>
+        /// <param name="targetFolderPath">The folder to place the download in</param>
+        /// <param name="remoteUrl">The remote url to get the data from</param>
+        /// <param name="dataProviderToUse">The data provider to use</param>
         public Game(string gameExe, string name, string targetFolderPath, string remoteUrl, ModProvider dataProviderToUse)
         {
             Name = name;
@@ -70,11 +78,19 @@ namespace GameModManager.Models
             RemoteVersion = new Version(0, 0, 0);
         }
 
+        /// <summary>
+        /// Open the link in the browser
+        /// </summary>
+        /// <returns>Task you can await which will be done as soon as it was opened in the browser</returns>
         public async Task OpenLinkInBrowser()
         {
             await Task.Run(() => url.Value.OpenInBrowser()).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Load the game image and return the data stream
+        /// </summary>
+        /// <returns>A stream with the game image</returns>
         public async Task<Stream> LoadGameImage()
         {
             return await Task<Stream>.Run(() =>
@@ -90,7 +106,6 @@ namespace GameModManager.Models
                 returnStream.Position = 0;
                 return returnStream;
             });
-
         }
     }
 }
