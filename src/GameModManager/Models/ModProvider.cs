@@ -9,12 +9,30 @@ using System.Threading.Tasks;
 
 namespace GameModManager.Models
 {
+    /// <summary>
+    /// Class describes a single provider to get some modification
+    /// </summary>
     public class ModProvider
     {
+        /// <summary>
+        /// The type of the provider
+        /// </summary>
         public Type ProviderType { get; }
+
+        /// <summary>
+        /// The name of the provider
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// A lazy object to load the mod loader isntance
+        /// </summary>
         private readonly Lazy<IModLoader> modLoader;
 
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="providerType">The type of the provider to use</param>
         public ModProvider(Type providerType)
         {
             ProviderType = providerType;
@@ -47,6 +65,11 @@ namespace GameModManager.Models
             });
         }
 
+        /// <summary>
+        /// Convert class name of the provider to a name which can be displayed
+        /// </summary>
+        /// <param name="name">The name of the class to convert</param>
+        /// <returns>The converted name</returns>
         private string ConvertToName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -67,11 +90,19 @@ namespace GameModManager.Models
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Get the example text for this specific mod provider
+        /// </summary>
+        /// <returns>The example text</returns>
         public string GetExampleText()
         {
             return GetClassInstance().ExampleUrl;
         }
 
+        /// <summary>
+        /// Get a new instance of this mod provider
+        /// </summary>
+        /// <returns>A useable mod provider instance</returns>
         public IModLoader GetClassInstance()
         {
             return modLoader.Value;

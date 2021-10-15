@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameModManager.Models
+﻿namespace GameModManager.Models
 {
-    public record YesNoDialogResult(bool accepted);
+    /// <summary>
+    /// Rectord for yes no dialog
+    /// </summary>
+    /// <param name="Accepted">Was the dialog accepted</param>
+    public record YesNoDialogResult(bool Accepted);
 }
