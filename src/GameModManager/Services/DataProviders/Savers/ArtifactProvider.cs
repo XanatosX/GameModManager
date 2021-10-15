@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace GameModManager.Services.DataProviders.Savers
 {
+    /// <summary>
+    /// Class to save and load artifacts from cache
+    /// </summary>
     public class ArtifactProvider : IDataSaver<ReleaseArtifact>, IDataLoader<ReleaseArtifact>
     {
         private const string README_NAME = "readme.md";
@@ -19,11 +22,13 @@ namespace GameModManager.Services.DataProviders.Savers
         private const string ARTIFACT_NAME = "artifact";
         private const string README_TEXT_RESOURCE = "GameModManager.Resources.ReleaseArtifactReadmeText.md";
 
+        /// <inheritdoc/>
         public Task<ReleaseArtifact> LoadDataAsync(string dataSource)
         {
             return Task.Run(() => LoadData(dataSource));
         }
 
+        /// <inheritdoc/>
         public ReleaseArtifact LoadData(string dataSource)
         {
             ReleaseArtifact returnArtifact = null;
@@ -48,7 +53,7 @@ namespace GameModManager.Services.DataProviders.Savers
                             return returnArtifact;
                         }
 
-                        ZipManifest manifestData = JsonSerializer.Deserialize<ZipManifest>(ReadZipArchiveENtry(manifest));
+                        ZipManifest manifestData = JsonSerializer.Deserialize<ZipManifest>(ReadZipArchiveEntry(manifest));
                         string localFile = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
                         artifact.ExtractToFile(localFile, true);
@@ -64,14 +69,19 @@ namespace GameModManager.Services.DataProviders.Savers
             }
         }
 
-        private string ReadZipArchiveENtry(ZipArchiveEntry? manifest)
+        /// <summary>
+        /// Read a zip archive entry as a string
+        /// </summary>
+        /// <param name="entry">The entry to read</param>
+        /// <returns>The string read from the entry or an empty one if there was an error</returns>
+        private string ReadZipArchiveEntry(ZipArchiveEntry? entry)
         {
             string returnString = string.Empty;
-            if (manifest == null)
+            if (entry == null)
             {
                 return returnString;
             }
-            using (Stream stream = manifest.Open())
+            using (Stream stream = entry.Open())
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -82,16 +92,17 @@ namespace GameModManager.Services.DataProviders.Savers
             return returnString;
         }
 
+        /// <inheritdoc/>
         public Task<bool> SaveDataAsync(ReleaseArtifact data, string connectionString)
         {
             return Task.Run(() => SaveData(data, connectionString));
         }
 
+        /// <inheritdoc/>
         public bool SaveData(ReleaseArtifact data, string connectionString)
         {
             try
             {
-                string test = LoadReadmeContent();
                 if (File.Exists(connectionString))
                 {
                     File.Delete(connectionString);
@@ -110,6 +121,12 @@ namespace GameModManager.Services.DataProviders.Savers
                         {
                             byte[] bytes = File.ReadAllBytes(data.ArtifactFile);
                             writer.BaseStream.Write(bytes, 0, bytes.Length);
+                        }
+
+                        ZipArchiveEntry readme = archive.CreateEntry(README_NAME);
+                        using (StreamWriter writer = new StreamWriter(readme.Open()))
+                        {
+                            writer.Write(LoadReadmeContent());
                         }
                     }
 
@@ -134,6 +151,10 @@ namespace GameModManager.Services.DataProviders.Savers
 
         }
 
+        /// <summary>
+        /// Load the data of the readme file
+        /// </summary>
+        /// <returns>The string ready to write to the readme file</returns>
         private string LoadReadmeContent()
         {
             string returnData = string.Empty;
@@ -144,10 +165,13 @@ namespace GameModManager.Services.DataProviders.Savers
                     returnData = reader.ReadToEnd();
                 }
             }
-
+            returnData = returnData.Replace("{DATE}", DateTime.Now.ToString("g"));
             return returnData;
         }
 
+        /// <summary>
+        /// Internal struct to save as manifest into the file
+        /// </summary>
         internal struct ZipManifest
         {
             /// <summary>
@@ -158,7 +182,17 @@ namespace GameModManager.Services.DataProviders.Savers
             /// <summary>
             /// The checksum of this artifact
             /// </summary>
-            public string Checksum { get; set; }            
+            public string Checksum { get; set; }     
+            
+            /// <summary>
+            /// The initial fiel ending of the artifact
+            /// </summary>
+            public string ArtifactFileEnding { get; set; }
+
+            /// <summary>
+            /// The initial fiel ending of the artifact
+            /// </summary>
+            public string ArtifactInitalName { get; set; }
 
             /// <summary>
             /// Create a new instance of this class
@@ -168,6 +202,9 @@ namespace GameModManager.Services.DataProviders.Savers
             {
                 Checksum = artifact.Checksum;
                 Version = artifact.Version.ToString();
+                FileInfo info = new FileInfo(artifact.ArtifactFile);
+                ArtifactFileEnding = info.Extension;
+                ArtifactInitalName = info.Name.Replace(ArtifactFileEnding, string.Empty);
             }
         }
     }
