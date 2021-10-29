@@ -6,7 +6,6 @@ using GameModManager.ViewModels;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Reactive;
 using System.Threading.Tasks;
 
 namespace GameModManager.Views
@@ -25,9 +24,14 @@ namespace GameModManager.Views
             this.WhenActivated(d => d(ViewModel!.OpenFileInteraction.RegisterHandler(DoOpenFileInteraction)));
             this.WhenActivated(d => d(ViewModel!.OpenFolderInteraction.RegisterHandler(DoOpenFolderInteraction)));
 
-            Closing += (sender, args) => ViewModel?.Dispose();
+            Closing += (_, _) => ViewModel?.Dispose();
         }
 
+        /// <summary>
+        /// Open a dialog to select multiple files, will set the first as output on the context
+        /// </summary>
+        /// <param name="context">Context with the dialog filter</param>
+        /// <returns>A task to await</returns>
         private async Task DoOpenFileInteraction(InteractionContext<List<FileDialogFilter>, string> context)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -38,6 +42,11 @@ namespace GameModManager.Views
             context.SetOutput(files.Length > 0 ? files[0] : string.Empty);
         }
 
+        /// <summary>
+        /// Open folder selection dialog, will set the selected folder as context output
+        /// </summary>
+        /// <param name="context">Context with starting directory</param>
+        /// <returns>A task to await</returns>
         private async Task DoOpenFolderInteraction(InteractionContext<string, string> context)
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog
@@ -49,6 +58,9 @@ namespace GameModManager.Views
             
         }
 
+        /// <summary>
+        /// Initialize avalonia xaml
+        /// </summary>
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
