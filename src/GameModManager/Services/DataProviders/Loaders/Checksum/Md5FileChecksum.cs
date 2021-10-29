@@ -4,8 +4,12 @@ using System.Text;
 
 namespace GameModManager.Services.DataProviders.Loaders.Checksum
 {
+    /// <summary>
+    /// Class to get the checksum for some file content
+    /// </summary>
     public class Md5FileChecksum : AbstractDataLoader<string>
     {
+        /// <inheritdoc/>
         public override string LoadData(string dataSource)
         {
             if (!File.Exists(dataSource))

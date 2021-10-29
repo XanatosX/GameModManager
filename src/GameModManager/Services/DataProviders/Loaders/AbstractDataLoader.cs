@@ -2,6 +2,10 @@
 
 namespace GameModManager.Services.DataProviders.Loaders
 {
+    /// <summary>
+    /// Abstract class to load data of type T
+    /// </summary>
+    /// <typeparam name="T">The data type the loader should load</typeparam>
     public abstract class AbstractDataLoader<T> : IDataLoader<T>
     {
         /// <inheritdoc/>
