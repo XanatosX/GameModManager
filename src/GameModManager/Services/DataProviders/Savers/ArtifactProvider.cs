@@ -185,7 +185,8 @@ namespace GameModManager.Services.DataProviders.Savers
         /// <summary>
         /// Internal struct to save as manifest into the file
         /// </summary>
-        internal struct ZipManifest
+        /// @TODO: Class could be removed by creating a custom converter for the json serializer
+        internal struct ZipManifest : IEquatable<ZipManifest>
         {
             /// <summary>
             /// The version of this artifact
@@ -218,6 +219,12 @@ namespace GameModManager.Services.DataProviders.Savers
                 FileInfo info = new FileInfo(artifact.ArtifactFile);
                 ArtifactFileEnding = info.Extension;
                 ArtifactInitalName = info.Name.Replace(ArtifactFileEnding, string.Empty);
+            }
+
+            /// <inheritdoc/>
+            public bool Equals(ZipManifest other)
+            {
+                return Checksum == other.Checksum && Version == other.Version;
             }
         }
     }
