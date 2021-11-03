@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:GameModManager.Services.DataConverter;assembly=GameModManager"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GameModManager.Views.GameView">
+  <UserControl.Resources>
+    <conv:VersionToString x:Key="VersionConverter"></conv:VersionToString>
+    <conv:DatetimeToStringConverter x:Key="DatetimeToStringConverter"></conv:DatetimeToStringConverter>
+  </UserControl.Resources>
+  <Grid ColumnDefinitions="*, auto, auto, *">
+    <StackPanel Grid.Column="0" Spacing="5" Orientation="Horizontal">
+      <Image Width="32" Stretch="Uniform" Source="{Binding Cover}" IsVisible="{Binding Cover, Converter={x:Static ObjectConverters.IsNotNull}}"></Image>
+      <Panel Height="32" IsVisible="{Binding Cover, Converter={x:Static ObjectConverters.IsNull}}">
+        <PathIcon Height="32" Width="32" Data="{StaticResource games_regular}" />
+      </Panel>
+      <TextBlock Text="{Binding Game.Name}" VerticalAlignment="Center"/>
+    </StackPanel>
+    <StackPanel Grid.Column="1" Spacing="2" Margin="5,0,5,0"  VerticalAlignment="Center">
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Last Request</TextBlock>
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Game.LastUpdateTime, Converter={StaticResource DatetimeToStringConverter}}"></TextBlock>
+    </StackPanel>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Margin="5,0,5,0" ColumnDefinitions="auto, auto" RowDefinitions="auto,auto">
+      <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">Local Version:</TextBlock>
+      <TextBlock Margin="5,0,0,0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Game.LocalVersion, Converter={StaticResource VersionConverter}}"/>
+      <TextBlock Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">Remote Version:</TextBlock>
+      <TextBlock Margin="5,0,0,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Game.RemoteVersion, Converter={StaticResource VersionConverter}}"></TextBlock>
+    </Grid>
+    <DockPanel Grid.Column="3" LastChildFill="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Button DockPanel.Dock="Right" Command="{Binding RemoveEntry}">
+          <Panel>
+          <ToolTip.Tip>
+            <TextBlock>Delete the game from the list</TextBlock>
+          </ToolTip.Tip>
+          <PathIcon Foreground="Red" Height="16" Width="16" Data="{StaticResource delete_regular}" />
+          </Panel>
+        </Button>
+      <Button DockPanel.Dock="Right" Command="{Binding EditEntry}">
+        <Panel>
+          <ToolTip.Tip>
+            <TextBlock>Edit the game to change the data</TextBlock>
+          </ToolTip.Tip>
+          <PathIcon Foreground="YellowGreen" Height="16" Width="16" Data="{StaticResource edit_regular}" />
+        </Panel>
+      </Button>
+      <Button DockPanel.Dock="Right" Command="{Binding OpenUrlCommand}">
+        <Panel>
+          <ToolTip.Tip>
+            <TextBlock>Open the linked website to the entry in your browser</TextBlock>
+          </ToolTip.Tip>
+          <PathIcon Height="16" Width="16" Data="{StaticResource link_regular}"></PathIcon>
+        </Panel>
+      </Button>
+        <Button DockPanel.Dock="Right">
+          <PathIcon Foreground="Blue" Height="16" Width="16" Data="{StaticResource arrow_sync_regular}" />
+        </Button>
+
+      <TextBlock DockPanel.Dock="Right"></TextBlock>
+    </DockPanel>
+  </Grid>
+</UserControl>
