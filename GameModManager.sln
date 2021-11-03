@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameModManager", "src\GameModManager\GameModManager.csproj", "{B58AB875-FC8E-4484-8378-C9A014FBE343}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B58AB875-FC8E-4484-8378-C9A014FBE343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B58AB875-FC8E-4484-8378-C9A014FBE343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B58AB875-FC8E-4484-8378-C9A014FBE343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B58AB875-FC8E-4484-8378-C9A014FBE343}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {697095C8-9827-48BC-B3D8-BA37B8870353}
+	EndGlobalSection
+EndGlobal
