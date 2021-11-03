@@ -133,8 +133,7 @@ namespace GameModManager.Models
         {
             IDataLoader<string> dataLoader = new Md5StringChecksum();
             string fileName = String.Format("{0}.bmp", dataLoader.LoadData(string.Format("{0}{1}", GameExe, RemoteUrl)));
-            //@TODO do not use temp as a cache folder base ...
-            return Path.Combine(Path.GetTempPath(), fileName);
+            return Path.Combine(Settings.Instance.CachePath, fileName);
         }
 
         /// <summary>
@@ -146,6 +145,10 @@ namespace GameModManager.Models
         {
             await Task.Run(() =>
             {
+                if (!Directory.Exists(Settings.Instance.CachePath))
+                {
+                    Directory.CreateDirectory(Settings.Instance.CachePath);
+                }
                 string cacheFileName = GetCachedFileName();
                 imageToSave.Save(cacheFileName);
             });

@@ -12,9 +12,9 @@ namespace GameModManager.Services.DataProviders.Savers
         public abstract bool SaveData(T data, string connectionString);
 
         /// <inheritdoc/>
-        public Task<bool> SaveDataAsync(T data, string connectionString)
+        public async Task<bool> SaveDataAsync(T data, string connectionString)
         {
-            return Task.Run(() => SaveData(data, connectionString));
+            return await Task.Run(() => SaveData(data, connectionString));
         }
     }
 }
