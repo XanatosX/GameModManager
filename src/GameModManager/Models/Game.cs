@@ -1,4 +1,7 @@
 ﻿using GameModManager.Services.Container;
+using GameModManager.Services.DataProviders.Loaders;
+using GameModManager.Services.DataProviders.Loaders.Checksum;
+using GameModManager.Services.DataProviders.Loaders.Images;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -59,6 +62,11 @@ namespace GameModManager.Models
         public Version RemoteVersion { get; private set; }
 
         /// <summary>
+        /// Cached image file to use
+        /// </summary>
+        public String CachedImageFile { get; private set; }
+
+        /// <summary>
         /// Create a new instance of the game class
         /// </summary>
         /// <param name="gameExe">The game exe to get the image from</param>
@@ -101,10 +109,45 @@ namespace GameModManager.Models
                     returnStream.Close();
                     return returnStream;
                 }
+                if (File.Exists(GetCachedFileName()))
+                {
+                    IDataLoader<Bitmap> dataLoader = new BitmapLoader();
+                    Bitmap image = dataLoader.LoadData(GetCachedFileName());
+                    image.Save(returnStream, ImageFormat.Png);
+                    returnStream.Position = 0;
+                    return returnStream;
+                }
                 Icon loadedIcon = Icon.ExtractAssociatedIcon(GameExe);
                 loadedIcon.ToBitmap().Save(returnStream, ImageFormat.Png);
+                SaveChachedImage(loadedIcon.ToBitmap());
                 returnStream.Position = 0;
                 return returnStream;
+            });
+        }
+
+        /// <summary>
+        /// Get the name of the cached image file
+        /// </summary>
+        /// <returns>The name of the file</returns>
+        private String GetCachedFileName()
+        {
+            IDataLoader<string> dataLoader = new Md5StringChecksum();
+            string fileName = String.Format("{0}.bmp", dataLoader.LoadData(string.Format("{0}{1}", GameExe, RemoteUrl)));
+            //@TODO do not use temp as a cache folder base ...
+            return Path.Combine(Path.GetTempPath(), fileName);
+        }
+
+        /// <summary>
+        /// Save the image to the cache to stop loading it from the game exe
+        /// </summary>
+        /// <param name="imageToSave">The image to save</param>
+        /// <returns>A awaitable task</returns>
+        public async Task SaveChachedImage(Bitmap imageToSave)
+        {
+            await Task.Run(() =>
+            {
+                string cacheFileName = GetCachedFileName();
+                imageToSave.Save(cacheFileName);
             });
         }
     }

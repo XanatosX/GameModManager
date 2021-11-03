@@ -12,9 +12,9 @@ namespace GameModManager.Services.DataProviders.Loaders
         public abstract T LoadData(string dataSource);
 
         /// <inheritdoc/>
-        public Task<T> LoadDataAsync(string dataSource)
+        public async Task<T> LoadDataAsync(string dataSource)
         {
-            return Task.Run(() => LoadData(dataSource));
+            return await Task.Run(() => LoadData(dataSource));
         }
     }
 }
